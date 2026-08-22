@@ -1,9 +1,10 @@
-﻿using EventTicketingSystem.Domain.Entities;
+﻿using EventTicketingSystem.Application.Abstractions.Persistence;
+using EventTicketingSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventTicketingSystem.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext, IUnitOfWork
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
