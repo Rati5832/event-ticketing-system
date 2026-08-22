@@ -1,4 +1,6 @@
-﻿using EventTicketingSystem.Infrastructure.Persistence;
+﻿using EventTicketingSystem.Application.Abstractions.Persistence;
+using EventTicketingSystem.Infrastructure.Persistence;
+using EventTicketingSystem.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,9 +18,17 @@ namespace EventTicketingSystem.Infrastructure
                 throw new InvalidOperationException("Connection string not found.");
             }
 
-            return services.AddDbContext<ApplicationDbContext>(options => 
-            options.UseSqlServer(connectionString)
+            services.AddDbContext<ApplicationDbContext>(options => 
+                options.UseSqlServer(connectionString)
             );
+
+            services.AddScoped<IVenueRepository, VenueRepository>();
+
+            services.AddScoped<IUnitOfWork>(provider =>
+                provider.GetRequiredService<ApplicationDbContext>()
+            );
+
+            return services;
         }
     }
 }

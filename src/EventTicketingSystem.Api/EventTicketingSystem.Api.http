@@ -1,6 +1,11 @@
-@EventTicketingSystem.Api_HostAddress = http://localhost:5141
+@EventTicketingSystem.Api_HostAddress = https://localhost:7299
 
-GET {{EventTicketingSystem.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{EventTicketingSystem.Api_HostAddress}}/api/venues
+Content-Type: application/json
+
+{
+  "name": "Tbilisi Are Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arena Arenana",
+  "address": "Tbilisi"
+}
 
 ###

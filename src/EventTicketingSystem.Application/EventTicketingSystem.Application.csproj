@@ -4,6 +4,23 @@
     <ProjectReference Include="..\EventTicketingSystem.Domain\EventTicketingSystem.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Abstractions\Persistence\" />
+    <Folder Include="Features\Events\CreateEvent\" />
+    <Folder Include="Features\Events\GetEventById\" />
+    <Folder Include="Features\Events\GetEvents\" />
+    <Folder Include="Features\Seats\CreateSeat\" />
+    <Folder Include="Features\Seats\GetSeatsByVenue\" />
+    <Folder Include="Features\Venues\GetVenueById\" />
+    <Folder Include="Features\Venues\GetVenues\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="10.4.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.4.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.11" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
