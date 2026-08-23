@@ -11,7 +11,7 @@
         public string Section { get; set; } = string.Empty;
 
         public string Row { get; set; } = string.Empty;
-    
+
         public int Number { get; set; }
 
         public ICollection<EventSeat> EventSeats { get; set; } = new List<EventSeat>();

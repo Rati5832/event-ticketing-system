@@ -1,4 +1,4 @@
-﻿namespace EventTicketingSystem.Application.Features.Venues.CreateVenue
+﻿namespace EventTicketingSystem.Application.Features.Venues.Common
 {
     public class VenueResponse
     {

@@ -11,10 +11,10 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Configurations
             builder.HasKey(es => es.Id);
             builder.Property(es => es.Price)
                 .IsRequired()
-                .HasPrecision(18,2);
+                .HasPrecision(18, 2);
             builder.Property(es => es.Status)
                 .IsRequired();
             builder.HasIndex(es => new { es.EventId, es.SeatId }).IsUnique();
-        }   
+        }
     }
 }

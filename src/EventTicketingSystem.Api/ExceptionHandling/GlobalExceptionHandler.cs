@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using EventTicketingSystem.Application.Common.Exceptions;
+using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace EventTicketingSystem.Api.ExceptionHandling
@@ -26,7 +27,22 @@ namespace EventTicketingSystem.Api.ExceptionHandling
                 };
 
                 await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
-                
+
+                return true;
+            }
+            else if (exception is NotFoundException notFoundException)
+            {
+                httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+
+                var responseObject = new
+                {
+                    status = httpContext.Response.StatusCode,
+                    title = "Not Found",
+                    error = notFoundException.Message
+                };
+
+                await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
+
                 return true;
             }
 

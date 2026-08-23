@@ -5,14 +5,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Abstractions\Persistence\" />
-    <Folder Include="Features\Events\CreateEvent\" />
     <Folder Include="Features\Events\GetEventById\" />
     <Folder Include="Features\Events\GetEvents\" />
     <Folder Include="Features\Seats\CreateSeat\" />
     <Folder Include="Features\Seats\GetSeatsByVenue\" />
-    <Folder Include="Features\Venues\GetVenueById\" />
-    <Folder Include="Features\Venues\GetVenues\" />
   </ItemGroup>
 
   <ItemGroup>
