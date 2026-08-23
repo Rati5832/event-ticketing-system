@@ -21,7 +21,7 @@ namespace EventTicketingSystem.Application.Features.Events.CreateEvent
             _requestValidation = requestValidation;
         }
 
-        public async Task<CreateEventResponse> HandleAsync(CreateEventRequest eventRequest, CancellationToken cancellationToken = default)
+        public async Task<EventResponse> HandleAsync(CreateEventRequest eventRequest, CancellationToken cancellationToken = default)
         {
             await _requestValidation.ValidateAndThrowAsync(eventRequest, cancellationToken);
 
@@ -45,7 +45,7 @@ namespace EventTicketingSystem.Application.Features.Events.CreateEvent
             await _eventRepository.AddAsync(eventEntity, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return new CreateEventResponse
+            return new EventResponse
             {
                 Id = eventEntity.Id,
                 Name = eventEntity.Name,

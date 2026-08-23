@@ -8,6 +8,6 @@ namespace EventTicketingSystem.Application.Abstractions.Persistence
 
         Task<Venue?> GetByIdAsync(int id, CancellationToken cancellation = default);
 
-        Task<List<Venue>> GetAllAsync(CancellationToken cancellationToken = default);
+        Task<IEnumerable<Venue>> GetAllAsync(CancellationToken cancellationToken = default);
     }
 }

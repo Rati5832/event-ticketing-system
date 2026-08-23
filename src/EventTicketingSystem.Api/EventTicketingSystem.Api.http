@@ -4,14 +4,14 @@ POST {{EventTicketingSystem.Api_HostAddress}}/api/venues
 Content-Type: application/json
 
 {
-  "name": "Tbilisi Arenana",
+  "name": "Tbilisi Arena",
   "address": "Tbilisi"
 }
 
 ###
 
 
-GET {{EventTicketingSystem.Api_HostAddress}}/api/venues/51
+GET {{EventTicketingSystem.Api_HostAddress}}/api/venues/12
 
 
 ###
@@ -29,5 +29,15 @@ Content-Type: application/json
   "description": "TestDescription",
   "startDate": "2026-08-23T12:53:00Z",
   "endDate": "2026-09-23T12:53:00Z",
-  "venueId": 1
+  "venueId": 12
 }
+
+###
+
+GET {{EventTicketingSystem.Api_HostAddress}}/api/events/10
+
+###
+
+GET {{EventTicketingSystem.Api_HostAddress}}/api/events
+
+###

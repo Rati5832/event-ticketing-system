@@ -18,14 +18,14 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Repositories
             await _context.Venues.AddAsync(venue, cancellation);
         }
 
-        public async Task<List<Venue>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Venue>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await _context.Venues.AsNoTracking().ToListAsync(cancellationToken);
         }
 
         public async Task<Venue?> GetByIdAsync(int id, CancellationToken cancellation = default)
         {
-            return await _context.Venues.FirstOrDefaultAsync(v => v.Id == id, cancellation);
+            return await _context.Venues.AsNoTracking().FirstOrDefaultAsync(v => v.Id == id, cancellation);
         }
     }
 }

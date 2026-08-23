@@ -1,4 +1,6 @@
 ﻿using EventTicketingSystem.Application.Features.Events.CreateEvent;
+using EventTicketingSystem.Application.Features.Events.GetEventById;
+using EventTicketingSystem.Application.Features.Events.GetEvents;
 using EventTicketingSystem.Application.Features.Venues.CreateVenue;
 using EventTicketingSystem.Application.Features.Venues.GetVenueById;
 using EventTicketingSystem.Application.Features.Venues.GetVenues;
@@ -16,6 +18,9 @@ namespace EventTicketingSystem.Application
             services.AddScoped<GetVenuesHandler>();
 
             services.AddScoped<CreateEventHandler>();
+            services.AddScoped<GetEventByIdHandler>();
+            services.AddScoped<GetEventsHandler>();
+
             services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
             return services;
         }
