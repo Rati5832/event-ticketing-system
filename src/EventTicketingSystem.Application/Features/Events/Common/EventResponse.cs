@@ -2,7 +2,7 @@
 
 namespace EventTicketingSystem.Application.Features.Events.CreateEvent
 {
-    public class CreateEventResponse
+    public class EventResponse
     {
         public int Id { get; set; }
 

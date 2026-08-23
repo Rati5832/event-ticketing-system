@@ -3,7 +3,7 @@ using EventTicketingSystem.Application.Features.Venues.GetVenueById;
 using EventTicketingSystem.Application.Features.Venues.GetVenues;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EventTicketingSystem.Api
+namespace EventTicketingSystem.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

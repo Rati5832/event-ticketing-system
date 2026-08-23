@@ -1,4 +1,5 @@
 ﻿
+using EventTicketingSystem.Application.Common.Validations;
 using FluentValidation;
 
 namespace EventTicketingSystem.Application.Features.Events.CreateEvent
@@ -12,7 +13,7 @@ namespace EventTicketingSystem.Application.Features.Events.CreateEvent
                 .MaximumLength(100).WithMessage("Event name cannot exceed 100 characters.");
 
             RuleFor(x => x.VenueId)
-                .GreaterThanOrEqualTo(1).WithMessage("Venue ID must be a positive integer.");
+                .MustHaveValidId();
 
             RuleFor(x => x.StartDate)
                 .LessThan(x => x.EndDate).WithMessage("Start date must be earlier than end date.");
