@@ -18,11 +18,12 @@ namespace EventTicketingSystem.Infrastructure
                 throw new InvalidOperationException("Connection string not found.");
             }
 
-            services.AddDbContext<ApplicationDbContext>(options => 
+            services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString)
             );
 
             services.AddScoped<IVenueRepository, VenueRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
 
             services.AddScoped<IUnitOfWork>(provider =>
                 provider.GetRequiredService<ApplicationDbContext>()

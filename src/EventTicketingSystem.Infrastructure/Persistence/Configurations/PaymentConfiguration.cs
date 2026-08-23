@@ -11,7 +11,7 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Amount)
                 .IsRequired()
-                .HasPrecision(18,2);
+                .HasPrecision(18, 2);
 
             builder.Property(x => x.Status)
                 .IsRequired();

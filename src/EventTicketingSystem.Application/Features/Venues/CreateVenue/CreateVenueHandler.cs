@@ -1,4 +1,5 @@
 ﻿using EventTicketingSystem.Application.Abstractions.Persistence;
+using EventTicketingSystem.Application.Features.Venues.Common;
 using EventTicketingSystem.Domain.Entities;
 using FluentValidation;
 

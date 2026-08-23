@@ -11,7 +11,7 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Configurations
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Section).IsRequired().HasMaxLength(50);
             builder.Property(s => s.Row).IsRequired().HasMaxLength(50);
-            
+
             builder
                 .HasMany(s => s.EventSeats)
                 .WithOne(e => e.Seat)

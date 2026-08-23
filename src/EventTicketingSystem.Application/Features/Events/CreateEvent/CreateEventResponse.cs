@@ -1,8 +1,8 @@
 ﻿using EventTicketingSystem.Domain.Enums;
 
-namespace EventTicketingSystem.Domain.Entities
+namespace EventTicketingSystem.Application.Features.Events.CreateEvent
 {
-    public class Event
+    public class CreateEventResponse
     {
         public int Id { get; set; }
 
@@ -15,11 +15,6 @@ namespace EventTicketingSystem.Domain.Entities
         public DateTime EndDate { get; set; }
 
         public int VenueId { get; set; }
-
-        public Venue Venue { get; set; } = null!;
-
         public EventStatus Status { get; set; }
-
-        public ICollection<EventSeat> EventSeats { get; set; } = new List<EventSeat>();
     }
 }

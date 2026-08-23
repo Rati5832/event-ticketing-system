@@ -7,7 +7,7 @@ namespace EventTicketingSystem.Domain.Entities
         public int Id { get; set; }
 
         public int UserId { get; set; }
-        
+
         public User User { get; set; } = null!;
 
         public int ReservationId { get; set; }
@@ -19,7 +19,7 @@ namespace EventTicketingSystem.Domain.Entities
         public decimal TotalPrice { get; set; }
 
         public DateTime CreatedAt { get; set; }
-        
+
         public BookingStatus Status { get; set; }
 
         public ICollection<Payment> Payments { get; set; } = new List<Payment>();
