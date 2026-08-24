@@ -16,6 +16,8 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Configurations
                 .HasMany(s => s.EventSeats)
                 .WithOne(e => e.Seat)
                 .HasForeignKey(e => e.SeatId).OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasIndex(s => new { s.VenueId, s.Section, s.Row, s.Number }).IsUnique();
         }
     }
 }

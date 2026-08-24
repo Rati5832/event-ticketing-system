@@ -11,7 +11,7 @@ Content-Type: application/json
 ###
 
 
-GET {{EventTicketingSystem.Api_HostAddress}}/api/venues/12
+GET {{EventTicketingSystem.Api_HostAddress}}/api/venues/13
 
 
 ###
@@ -34,10 +34,21 @@ Content-Type: application/json
 
 ###
 
-GET {{EventTicketingSystem.Api_HostAddress}}/api/events/10
+GET {{EventTicketingSystem.Api_HostAddress}}/api/events/13
 
 ###
 
 GET {{EventTicketingSystem.Api_HostAddress}}/api/events
+
+###
+
+POST {{EventTicketingSystem.Api_HostAddress}}/api/venues/14/seats
+Content-Type: application/json
+
+{
+  "Section" : "ABCfF",
+  "Row": "Row 4fsd",
+  "Number": 12 
+}
 
 ###

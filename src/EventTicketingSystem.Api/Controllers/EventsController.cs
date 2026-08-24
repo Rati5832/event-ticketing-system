@@ -9,11 +9,11 @@ namespace EventTicketingSystem.Api.Controllers
     [ApiController]
     public class EventsController : ControllerBase
     {
-        private readonly CreateEventHandler _createEventHandler;
+        private readonly CreateEventCommandHandler _createEventHandler;
         private readonly GetEventByIdHandler _getEventByIdHandler;
         private readonly GetEventsHandler _getEventsHandler;
 
-        public EventsController(CreateEventHandler createEventHandler, GetEventByIdHandler getEventByIdHandler, GetEventsHandler getEventsHandler)
+        public EventsController(CreateEventCommandHandler createEventHandler, GetEventByIdHandler getEventByIdHandler, GetEventsHandler getEventsHandler)
         {
             _createEventHandler = createEventHandler;
             _getEventByIdHandler = getEventByIdHandler;
@@ -21,7 +21,7 @@ namespace EventTicketingSystem.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateEventRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(CreateEventCommand request, CancellationToken cancellationToken)
         {
             var eventDto = await _createEventHandler.HandleAsync(request, cancellationToken);
 

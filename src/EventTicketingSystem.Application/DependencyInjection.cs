@@ -1,6 +1,7 @@
 ﻿using EventTicketingSystem.Application.Features.Events.CreateEvent;
 using EventTicketingSystem.Application.Features.Events.GetEventById;
 using EventTicketingSystem.Application.Features.Events.GetEvents;
+using EventTicketingSystem.Application.Features.Seats.CreateSeat;
 using EventTicketingSystem.Application.Features.Venues.CreateVenue;
 using EventTicketingSystem.Application.Features.Venues.GetVenueById;
 using EventTicketingSystem.Application.Features.Venues.GetVenues;
@@ -13,13 +14,16 @@ namespace EventTicketingSystem.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<CreateVenueHandler>();
+            services.AddScoped<CreateVenueCommandHandler>();
             services.AddScoped<GetVenueByIdHandler>();
             services.AddScoped<GetVenuesHandler>();
 
-            services.AddScoped<CreateEventHandler>();
+            services.AddScoped<CreateEventCommandHandler>();
             services.AddScoped<GetEventByIdHandler>();
             services.AddScoped<GetEventsHandler>();
+
+            services.AddScoped<CreateSeatCommandHandler>();
+
 
             services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
             return services;
