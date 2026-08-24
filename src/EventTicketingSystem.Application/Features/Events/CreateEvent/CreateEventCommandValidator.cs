@@ -4,9 +4,9 @@ using FluentValidation;
 
 namespace EventTicketingSystem.Application.Features.Events.CreateEvent
 {
-    public class CreateEventRequestValidator : AbstractValidator<CreateEventRequest>
+    public class CreateEventCommandValidator : AbstractValidator<CreateEventCommand>
     {
-        public CreateEventRequestValidator()
+        public CreateEventCommandValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Event name is required.")

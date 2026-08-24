@@ -45,6 +45,21 @@ namespace EventTicketingSystem.Api.ExceptionHandling
 
                 return true;
             }
+            else if (exception is SeatAlreadyExistsException seatAlreadyExistsException)
+            {
+                httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
+
+                var responseObject = new
+                {
+                    status = httpContext.Response.StatusCode,
+                    title = "Resource Already Exists",
+                    error = seatAlreadyExistsException.Message
+                };
+
+                await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
+
+                return true;
+            }
 
             return false;
         }

@@ -2,9 +2,9 @@
 
 namespace EventTicketingSystem.Application.Features.Venues.CreateVenue
 {
-    public class CreateVenueRequestValidator : AbstractValidator<CreateVenueRequest>
+    public class CreateVenueCommandValidator : AbstractValidator<CreateVenueCommand>
     {
-        public CreateVenueRequestValidator()
+        public CreateVenueCommandValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Venue name is required.")

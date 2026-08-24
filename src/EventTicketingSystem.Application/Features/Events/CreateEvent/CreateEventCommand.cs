@@ -1,6 +1,6 @@
 ﻿namespace EventTicketingSystem.Application.Features.Events.CreateEvent
 {
-    public class CreateEventRequest
+    public class CreateEventCommand
     {
         public string Name { get; set; } = string.Empty;
 

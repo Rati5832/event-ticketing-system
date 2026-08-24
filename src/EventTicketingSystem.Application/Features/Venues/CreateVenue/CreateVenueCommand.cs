@@ -1,6 +1,6 @@
 ﻿namespace EventTicketingSystem.Application.Features.Venues.CreateVenue
 {
-    public class CreateVenueRequest
+    public class CreateVenueCommand
     {
         public string Name { get; set; } = string.Empty;
 

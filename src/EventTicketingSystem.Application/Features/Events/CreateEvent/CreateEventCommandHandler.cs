@@ -6,14 +6,14 @@ using FluentValidation;
 
 namespace EventTicketingSystem.Application.Features.Events.CreateEvent
 {
-    public class CreateEventHandler
+    public class CreateEventCommandHandler
     {
         private readonly IVenueRepository _venueRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly CreateEventRequestValidator _requestValidation;
+        private readonly CreateEventCommandValidator _requestValidation;
 
-        public CreateEventHandler(IVenueRepository venueRepository, IEventRepository eventRepository, IUnitOfWork unitOfWork, CreateEventRequestValidator requestValidation)
+        public CreateEventCommandHandler(IVenueRepository venueRepository, IEventRepository eventRepository, IUnitOfWork unitOfWork, CreateEventCommandValidator requestValidation)
         {
             _venueRepository = venueRepository;
             _eventRepository = eventRepository;
@@ -21,7 +21,7 @@ namespace EventTicketingSystem.Application.Features.Events.CreateEvent
             _requestValidation = requestValidation;
         }
 
-        public async Task<EventResponse> HandleAsync(CreateEventRequest eventRequest, CancellationToken cancellationToken = default)
+        public async Task<EventResponse> HandleAsync(CreateEventCommand eventRequest, CancellationToken cancellationToken = default)
         {
             await _requestValidation.ValidateAndThrowAsync(eventRequest, cancellationToken);
 

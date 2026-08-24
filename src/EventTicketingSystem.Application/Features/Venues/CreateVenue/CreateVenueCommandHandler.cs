@@ -5,20 +5,20 @@ using FluentValidation;
 
 namespace EventTicketingSystem.Application.Features.Venues.CreateVenue
 {
-    public class CreateVenueHandler
+    public class CreateVenueCommandHandler
     {
         private readonly IVenueRepository _venueRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IValidator<CreateVenueRequest> _venueRequestValidation;
+        private readonly IValidator<CreateVenueCommand> _venueRequestValidation;
 
-        public CreateVenueHandler(IVenueRepository venueRepository, IUnitOfWork unitOfWork, IValidator<CreateVenueRequest> _validator)
+        public CreateVenueCommandHandler(IVenueRepository venueRepository, IUnitOfWork unitOfWork, IValidator<CreateVenueCommand> _validator)
         {
             _venueRepository = venueRepository;
             _unitOfWork = unitOfWork;
             _venueRequestValidation = _validator;
         }
 
-        public async Task<VenueResponse> HandleAsync(CreateVenueRequest request, CancellationToken cancellationToken = default)
+        public async Task<VenueResponse> HandleAsync(CreateVenueCommand request, CancellationToken cancellationToken = default)
         {
             var validation = await _venueRequestValidation.ValidateAsync(request, cancellationToken);
 

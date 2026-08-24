@@ -5,7 +5,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Seats\CreateSeat\" />
     <Folder Include="Features\Seats\GetSeatsByVenue\" />
   </ItemGroup>
 

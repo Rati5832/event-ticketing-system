@@ -1,4 +1,5 @@
-﻿using EventTicketingSystem.Application.Features.Venues.CreateVenue;
+﻿using EventTicketingSystem.Application.Features.Seats.CreateSeat;
+using EventTicketingSystem.Application.Features.Venues.CreateVenue;
 using EventTicketingSystem.Application.Features.Venues.GetVenueById;
 using EventTicketingSystem.Application.Features.Venues.GetVenues;
 using Microsoft.AspNetCore.Mvc;
@@ -9,23 +10,36 @@ namespace EventTicketingSystem.Api.Controllers
     [ApiController]
     public class VenuesController : ControllerBase
     {
-        private readonly CreateVenueHandler _createVenueHandler;
+        private readonly CreateVenueCommandHandler _createVenueHandler;
         private readonly GetVenueByIdHandler _getVenueByIdHandler;
         private readonly GetVenuesHandler _getVenuesHandler;
+        private readonly CreateSeatCommandHandler _createSeatHandler;
 
-        public VenuesController(CreateVenueHandler createVenueHandler, GetVenueByIdHandler getVenueByIdHandler, GetVenuesHandler getVenuesHandler)
+        public VenuesController(CreateVenueCommandHandler createVenueHandler, 
+            GetVenueByIdHandler getVenueByIdHandler,
+            GetVenuesHandler getVenuesHandler,
+            CreateSeatCommandHandler createSeatHandler)
         {
             _createVenueHandler = createVenueHandler;
             _getVenueByIdHandler = getVenueByIdHandler;
             _getVenuesHandler = getVenuesHandler;
+            _createSeatHandler = createSeatHandler;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateVenueRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(CreateVenueCommand request, CancellationToken cancellationToken)
         {
             var response = await _createVenueHandler.HandleAsync(request, cancellationToken);
 
             return StatusCode(StatusCodes.Status201Created, response);
+        }
+
+        [HttpPost("{venueId:int}/seats")]
+        public async Task<IActionResult> Create(int venueId, CreateSeatRequest createSeatRequest, CancellationToken cancellationToken)
+        {
+            var seatDto = await _createSeatHandler.HandleAsync(venueId, createSeatRequest, cancellationToken);
+
+            return StatusCode(201, seatDto);
         }
 
         [HttpGet("{id:int}")]
