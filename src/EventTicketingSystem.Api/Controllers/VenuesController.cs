@@ -1,4 +1,5 @@
 ﻿using EventTicketingSystem.Application.Features.Seats.CreateSeat;
+using EventTicketingSystem.Application.Features.Seats.GetSeatsByVenue;
 using EventTicketingSystem.Application.Features.Venues.CreateVenue;
 using EventTicketingSystem.Application.Features.Venues.GetVenueById;
 using EventTicketingSystem.Application.Features.Venues.GetVenues;
@@ -14,16 +15,19 @@ namespace EventTicketingSystem.Api.Controllers
         private readonly GetVenueByIdHandler _getVenueByIdHandler;
         private readonly GetVenuesHandler _getVenuesHandler;
         private readonly CreateSeatCommandHandler _createSeatHandler;
+        private readonly GetSeatsByVenueHandler _getSeatsRequestHandler;
 
         public VenuesController(CreateVenueCommandHandler createVenueHandler, 
             GetVenueByIdHandler getVenueByIdHandler,
             GetVenuesHandler getVenuesHandler,
-            CreateSeatCommandHandler createSeatHandler)
+            CreateSeatCommandHandler createSeatHandler,
+            GetSeatsByVenueHandler getSeatsRequestHandler)
         {
             _createVenueHandler = createVenueHandler;
             _getVenueByIdHandler = getVenueByIdHandler;
             _getVenuesHandler = getVenuesHandler;
             _createSeatHandler = createSeatHandler;
+            _getSeatsRequestHandler = getSeatsRequestHandler;
         }
 
         [HttpPost]
@@ -35,7 +39,7 @@ namespace EventTicketingSystem.Api.Controllers
         }
 
         [HttpPost("{venueId:int}/seats")]
-        public async Task<IActionResult> Create(int venueId, CreateSeatRequest createSeatRequest, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateSeatByVenueId(int venueId, CreateSeatRequest createSeatRequest, CancellationToken cancellationToken)
         {
             var seatDto = await _createSeatHandler.HandleAsync(venueId, createSeatRequest, cancellationToken);
 
@@ -54,6 +58,15 @@ namespace EventTicketingSystem.Api.Controllers
         {
             var response = await _getVenuesHandler.HandleAsync(cancellationToken);
             return Ok(response);
+        }
+
+        [HttpGet("{venueId:int}/seats")]
+        public async Task<IActionResult> GetAllSeatsByVenueId(int venueId, CancellationToken cancellationToken)
+        {
+            var venueRequest = new GetVenueByIdRequest { Id = venueId };
+            var listOfSeats = await _getSeatsRequestHandler.HandleAsync(venueRequest, cancellationToken);
+
+            return Ok(listOfSeats);
         }
     }
 }

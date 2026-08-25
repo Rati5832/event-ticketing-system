@@ -52,3 +52,7 @@ Content-Type: application/json
 }
 
 ###
+
+GET {{EventTicketingSystem.Api_HostAddress}}/api/venues/15/seats
+
+###
