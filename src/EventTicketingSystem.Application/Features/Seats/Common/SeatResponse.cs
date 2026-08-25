@@ -1,6 +1,6 @@
 ﻿namespace EventTicketingSystem.Application.Features.Seats.Common
 {
-    public class CreateSeatResponse
+    public class SeatResponse
     {
         public int Id { get; set; }
 

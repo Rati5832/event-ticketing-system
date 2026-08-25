@@ -25,7 +25,7 @@ namespace EventTicketingSystem.Application.Features.Seats.CreateSeat
             _validator = validator;
         }
 
-        public async Task<CreateSeatResponse> HandleAsync(int venueId, CreateSeatRequest seatRequest, CancellationToken cancellationToken = default)
+        public async Task<SeatResponse> HandleAsync(int venueId, CreateSeatRequest seatRequest, CancellationToken cancellationToken = default)
         {
             var command = new CreateSeatCommand
             {
@@ -68,7 +68,7 @@ namespace EventTicketingSystem.Application.Features.Seats.CreateSeat
             await _seatRepository.AddAsync(seatEntity, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return new CreateSeatResponse
+            return new SeatResponse
             {
                 Id = seatEntity.Id,
                 VenueId = seatEntity.VenueId,

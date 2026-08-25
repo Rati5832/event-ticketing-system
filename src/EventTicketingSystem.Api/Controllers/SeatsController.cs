@@ -1,5 +1,4 @@
-﻿using EventTicketingSystem.Application.Features.Seats.CreateSeat;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace EventTicketingSystem.Api.Controllers
 {
