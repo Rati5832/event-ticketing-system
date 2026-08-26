@@ -9,5 +9,6 @@ namespace EventTicketingSystem.Application.Abstractions.Persistence
         Task<IEnumerable<Event>> GetAllAsync(CancellationToken cancellationToken);
 
         Task<Event?> GetByIdAsync(int id, CancellationToken cancellation = default);
+
     }
 }

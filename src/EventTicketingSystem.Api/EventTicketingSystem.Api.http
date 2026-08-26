@@ -4,8 +4,8 @@ POST {{EventTicketingSystem.Api_HostAddress}}/api/venues
 Content-Type: application/json
 
 {
-  "name": "Tbilisi Arena",
-  "address": "Tbilisi"
+  "name": "Tbilisi Arena123",
+  "address": "Tbilisi123"
 }
 
 ###
@@ -25,14 +25,15 @@ POST {{EventTicketingSystem.Api_HostAddress}}/api/events
 Content-Type: application/json
 
 {
-  "name" : "Test123",
-  "description": "TestDescription",
+  "name" : "SXVA",
+  "description": "SXVA",
   "startDate": "2026-08-23T12:53:00Z",
   "endDate": "2026-09-23T12:53:00Z",
-  "venueId": 12
+  "venueId": 16
 }
 
 ###
+
 
 GET {{EventTicketingSystem.Api_HostAddress}}/api/events/13
 
@@ -41,6 +42,17 @@ GET {{EventTicketingSystem.Api_HostAddress}}/api/events/13
 GET {{EventTicketingSystem.Api_HostAddress}}/api/events
 
 ###
+
+POST {{EventTicketingSystem.Api_HostAddress}}/api/events/14/seats
+Content-Type: application/json
+
+{
+  "SeatId" : "4",
+  "Price": "1500"
+}
+
+###
+
 
 POST {{EventTicketingSystem.Api_HostAddress}}/api/venues/14/seats
 Content-Type: application/json
