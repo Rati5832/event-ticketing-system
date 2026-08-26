@@ -45,15 +45,22 @@ namespace EventTicketingSystem.Api.ExceptionHandling
 
                 return true;
             }
-            else if (exception is SeatAlreadyExistsException seatAlreadyExistsException)
+            else if (exception is SeatAlreadyExistsException or SeatNotInVenueException)
             {
-                httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
+                var (statusCode, title, errorMessage) = exception switch
+                {
+                    SeatAlreadyExistsException ex => (StatusCodes.Status409Conflict, "Resource Already Exists", ex.Message),
+                    SeatNotInVenueException ex => (StatusCodes.Status400BadRequest, "Invalid Venue Seat", ex.Message),
+                    _ => (StatusCodes.Status409Conflict, "Conflict", exception.Message)
+                };
+
+                httpContext.Response.StatusCode = statusCode;
 
                 var responseObject = new
                 {
-                    status = httpContext.Response.StatusCode,
-                    title = "Resource Already Exists",
-                    error = seatAlreadyExistsException.Message
+                    statusCode,
+                    title,
+                    errorMessage
                 };
 
                 await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
