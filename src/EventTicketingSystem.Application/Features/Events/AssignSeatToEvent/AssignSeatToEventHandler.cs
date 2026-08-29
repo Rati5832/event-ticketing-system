@@ -1,6 +1,5 @@
 ﻿using EventTicketingSystem.Application.Abstractions.Persistence;
 using EventTicketingSystem.Application.Common.Exceptions;
-using EventTicketingSystem.Application.Features.Seats.CreateSeat;
 using EventTicketingSystem.Domain.Entities;
 using EventTicketingSystem.Domain.Enums;
 using FluentValidation;
@@ -16,9 +15,9 @@ namespace EventTicketingSystem.Application.Features.Events.AssignSeatToEvent
         private readonly IUnitOfWork _unitOfWork;
 
         public AssignSeatToEventHandler(
-            IEventRepository eventRepository, 
+            IEventRepository eventRepository,
             ISeatRepository seatRepository,
-            IEventSeatRepository eventSeatRepository, 
+            IEventSeatRepository eventSeatRepository,
             IValidator<AssignSeatToEventCommand> validator,
             IUnitOfWork unitOfWork)
         {
@@ -51,7 +50,7 @@ namespace EventTicketingSystem.Application.Features.Events.AssignSeatToEvent
             {
                 throw new NotFoundException($"Seat With Id {createSeatRequest.SeatId} Does Not Exist.");
             }
-            
+
             if (eventEntity.VenueId != seatEntity.VenueId)
             {
                 throw new SeatNotInVenueException($"Event And Seat Should Be Under Same Venue");

@@ -15,6 +15,7 @@ namespace EventTicketingSystem.Application.Features.Events.CreateEvent
         public DateTime EndDate { get; set; }
 
         public int VenueId { get; set; }
+
         public EventStatus Status { get; set; }
     }
 }
