@@ -28,6 +28,15 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Repositories
             cancellation);
         }
 
+        public async Task<IEnumerable<Seat>> GetAllByEventAsync(int eventId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Seats
+                .AsNoTracking()
+                .Include(s => s.EventSeats.Where(es => es.EventId == eventId))
+                .Where(s => s.EventSeats.Any(es => es.EventId == eventId))
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<IEnumerable<Seat>> GetAllByVenueAsync(int venueId, CancellationToken cancellationToken = default)
         {
             return await _context.Seats.AsNoTracking().Where(s => s.VenueId == venueId).ToListAsync(cancellationToken);

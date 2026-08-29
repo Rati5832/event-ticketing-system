@@ -2,6 +2,7 @@
 using EventTicketingSystem.Application.Features.Events.CreateEvent;
 using EventTicketingSystem.Application.Features.Events.GetEventById;
 using EventTicketingSystem.Application.Features.Events.GetEvents;
+using EventTicketingSystem.Application.Features.Events.GetSeatsByEvent;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventTicketingSystem.Api.Controllers
@@ -14,18 +15,21 @@ namespace EventTicketingSystem.Api.Controllers
         private readonly GetEventByIdHandler _getEventByIdHandler;
         private readonly GetEventsHandler _getEventsHandler;
         private readonly AssignSeatToEventHandler _assignSeatToEventHandler;
+        private readonly GetSeatsByEventHandler _getSeatsByEventHandler;
 
         public EventsController(
-            CreateEventCommandHandler createEventHandler, 
-            GetEventByIdHandler getEventByIdHandler, 
+            CreateEventCommandHandler createEventHandler,
+            GetEventByIdHandler getEventByIdHandler,
             GetEventsHandler getEventsHandler,
-            AssignSeatToEventHandler assignSeatToEventHandler
+            AssignSeatToEventHandler assignSeatToEventHandler,
+            GetSeatsByEventHandler getSeatsByEventHandler
             )
         {
             _createEventHandler = createEventHandler;
             _getEventByIdHandler = getEventByIdHandler;
             _getEventsHandler = getEventsHandler;
             _assignSeatToEventHandler = assignSeatToEventHandler;
+            _getSeatsByEventHandler = getSeatsByEventHandler;
         }
 
         [HttpPost]
@@ -52,12 +56,18 @@ namespace EventTicketingSystem.Api.Controllers
             return Ok(events);
         }
 
-        [HttpPost("{eventId}/seats")]
+        [HttpPost("{eventId:int}/seats")]
         public async Task<IActionResult> AssignSeatToEvent(int eventId, AssignSeatToEventRequest seatToEventRequest, CancellationToken cancellationToken)
         {
 
             var assignSeatToEventDto = await _assignSeatToEventHandler.HandleAsync(eventId, seatToEventRequest, cancellationToken);
             return StatusCode(201, assignSeatToEventDto);
+        }
+
+        [HttpGet("{Id:int}/seats")]
+        public async Task<IActionResult> GetAllSeatsByEvent([FromRoute] GetEventByIdRequest eventId, CancellationToken cancellationToken)
+        {
+            return Ok(await _getSeatsByEventHandler.HandleAsync(eventId, cancellationToken));
         }
     }
 }

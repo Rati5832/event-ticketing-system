@@ -2,6 +2,7 @@
 using EventTicketingSystem.Application.Features.Events.CreateEvent;
 using EventTicketingSystem.Application.Features.Events.GetEventById;
 using EventTicketingSystem.Application.Features.Events.GetEvents;
+using EventTicketingSystem.Application.Features.Events.GetSeatsByEvent;
 using EventTicketingSystem.Application.Features.Seats.CreateSeat;
 using EventTicketingSystem.Application.Features.Seats.GetSeatsByVenue;
 using EventTicketingSystem.Application.Features.Venues.CreateVenue;
@@ -28,6 +29,7 @@ namespace EventTicketingSystem.Application
             services.AddScoped<GetSeatsByVenueHandler>();
 
             services.AddScoped<AssignSeatToEventHandler>();
+            services.AddScoped<GetSeatsByEventHandler>();
 
             services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
             return services;

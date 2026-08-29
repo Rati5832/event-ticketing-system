@@ -10,7 +10,6 @@ Content-Type: application/json
 
 ###
 
-
 GET {{EventTicketingSystem.Api_HostAddress}}/api/venues/13
 
 
@@ -25,17 +24,17 @@ POST {{EventTicketingSystem.Api_HostAddress}}/api/events
 Content-Type: application/json
 
 {
-  "name" : "SXVA",
+  "name" : "SXVA123",
   "description": "SXVA",
   "startDate": "2026-08-23T12:53:00Z",
   "endDate": "2026-09-23T12:53:00Z",
-  "venueId": 16
+  "venueId": 12
 }
 
 ###
 
 
-GET {{EventTicketingSystem.Api_HostAddress}}/api/events/13
+GET {{EventTicketingSystem.Api_HostAddress}}/api/events/18
 
 ###
 
@@ -43,28 +42,32 @@ GET {{EventTicketingSystem.Api_HostAddress}}/api/events
 
 ###
 
-POST {{EventTicketingSystem.Api_HostAddress}}/api/events/14/seats
+POST {{EventTicketingSystem.Api_HostAddress}}/api/events/18/seats
 Content-Type: application/json
 
 {
-  "SeatId" : "4",
+  "SeatId" : "15",
   "Price": "1500"
 }
 
 ###
 
+GET {{EventTicketingSystem.Api_HostAddress}}/api/events/18/seats
 
-POST {{EventTicketingSystem.Api_HostAddress}}/api/venues/14/seats
+###
+
+
+POST {{EventTicketingSystem.Api_HostAddress}}/api/venues/12/seats
 Content-Type: application/json
 
 {
   "Section" : "ABCfF",
-  "Row": "Row 4fsd",
+  "Row": "Row 4fsf32",
   "Number": 12 
 }
 
 ###
 
-GET {{EventTicketingSystem.Api_HostAddress}}/api/venues/15/seats
+GET {{EventTicketingSystem.Api_HostAddress}}/api/venues/16/seats
 
 ###
