@@ -1,4 +1,5 @@
 ﻿using EventTicketingSystem.Application.Abstractions.Persistence;
+using EventTicketingSystem.Application.Common.Exceptions;
 using EventTicketingSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,20 @@ namespace EventTicketingSystem.Infrastructure.Persistence
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await base.SaveChangesAsync(cancellationToken);
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                throw new ConcurrencyException(
+                    "The resource was modified by another operation.",
+                    ex);
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

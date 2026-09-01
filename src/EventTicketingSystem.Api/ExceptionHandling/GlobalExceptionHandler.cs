@@ -1,5 +1,6 @@
 ﻿using EventTicketingSystem.Application.Common.Exceptions;
 using FluentValidation;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace EventTicketingSystem.Api.ExceptionHandling
@@ -67,7 +68,37 @@ namespace EventTicketingSystem.Api.ExceptionHandling
 
                 return true;
             }
+            else if (exception is SeatNotAvailableException seatNotAvailableException)
+            {
+                httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
+                var responseObject = new
+                {
+                    status = httpContext.Response.StatusCode,
+                    title = "Seat Not Available",
+                    error = seatNotAvailableException.Message
+                };
 
+                await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
+
+                return true;
+            }
+            else if (exception is ConcurrencyException concurrencyException)
+            {
+                httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
+
+                var responseObject = new
+                {
+                    status = httpContext.Response.StatusCode,
+                    title = "Concurrency Conflict",
+                    error = concurrencyException.Message
+                };
+
+                await httpContext.Response.WriteAsJsonAsync(
+                    responseObject,
+                    cancellationToken);
+
+                return true;
+            }
             return false;
         }
     }

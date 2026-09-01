@@ -26,6 +26,7 @@ namespace EventTicketingSystem.Infrastructure
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<ISeatRepository, SeatRepository>();
             services.AddScoped<IEventSeatRepository, EventSeatRepository>();
+            services.AddScoped<IReservationRepository, ReservationRepository>();
 
             services.AddScoped<IUnitOfWork>(provider =>
                 provider.GetRequiredService<ApplicationDbContext>()
