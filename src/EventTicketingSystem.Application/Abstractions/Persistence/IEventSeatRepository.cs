@@ -7,5 +7,7 @@ namespace EventTicketingSystem.Application.Abstractions.Persistence
         Task AssignSeatToEventAsync(EventSeat eventSeat, CancellationToken cancellationToken);
 
         Task<bool> EventAndSeatExistsAsync(int eventId, int seatId, CancellationToken cancellationToken);
+
+        Task<EventSeat?> GetEventSeatById(int eventSeatId, CancellationToken cancellationToken);
     }
 }

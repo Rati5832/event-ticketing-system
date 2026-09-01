@@ -15,6 +15,8 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Configurations
             builder.Property(es => es.Status)
                 .IsRequired();
             builder.HasIndex(es => new { es.EventId, es.SeatId }).IsUnique();
+            builder.Property(es => es.RowVersion)
+                .IsRowVersion();
         }
     }
 }

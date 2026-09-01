@@ -16,6 +16,8 @@ namespace EventTicketingSystem.Domain.Entities
 
         public decimal Price { get; set; }
 
+        public byte[] RowVersion { get; set; } = null!;
+
         public EventSeatStatus Status { get; set; }
 
         public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();

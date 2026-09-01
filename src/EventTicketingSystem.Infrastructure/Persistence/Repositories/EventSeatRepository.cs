@@ -25,5 +25,10 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Repositories
             es.SeatId == seatId,
             cancellationToken);
         }
+
+        public async Task<EventSeat?> GetEventSeatById(int eventSeatId, CancellationToken cancellationToken)
+        {
+            return await _context.EventSeats.FirstOrDefaultAsync(es => es.Id == eventSeatId, cancellationToken);
+        }
     }
 }
