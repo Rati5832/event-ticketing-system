@@ -48,7 +48,7 @@ namespace EventTicketingSystem.Application.Features.Reservations.CreateReservati
                 UserId = createReservation.UserId,
                 EventSeatId = createReservation.EventSeatId,
                 CreatedAt = now,
-                ExpiresAt = now.AddMinutes(10),
+                ExpiresAt = now.AddSeconds(40),
                 Status = ReservationStatus.Active
             };
 

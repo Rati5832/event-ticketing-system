@@ -1,3 +1,4 @@
+using EventTicketingSystem.Api.BackgroundServices;
 using EventTicketingSystem.Api.ExceptionHandling;
 using EventTicketingSystem.Application;
 using EventTicketingSystem.Infrastructure;
@@ -10,6 +11,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.AddHostedService<ReservationExpirationWorker>();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();

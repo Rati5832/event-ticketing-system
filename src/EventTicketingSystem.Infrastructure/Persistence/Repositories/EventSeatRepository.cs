@@ -15,7 +15,7 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Repositories
 
         public async Task AssignSeatToEventAsync(EventSeat eventSeat, CancellationToken cancellationToken)
         {
-            await _context.AddAsync(eventSeat, cancellationToken);
+            await _context.EventSeats.AddAsync(eventSeat, cancellationToken);
         }
 
         public async Task<bool> EventAndSeatExistsAsync(int eventId, int seatId, CancellationToken cancellationToken)
