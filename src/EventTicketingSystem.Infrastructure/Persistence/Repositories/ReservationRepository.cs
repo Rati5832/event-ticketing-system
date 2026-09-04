@@ -1,5 +1,7 @@
 ﻿using EventTicketingSystem.Application.Abstractions.Persistence;
 using EventTicketingSystem.Domain.Entities;
+using EventTicketingSystem.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace EventTicketingSystem.Infrastructure.Persistence.Repositories
 {
@@ -14,7 +16,17 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Repositories
 
         public async Task AddAsync(Reservation reservationEntity, CancellationToken cancellation = default)
         {
-            await _context.AddAsync(reservationEntity, cancellation);
+            await _context.Reservations.AddAsync(reservationEntity, cancellation);
+        }
+
+        public async Task<IReadOnlyList<int>> GetExpiredReservationIdsAsync(DateTime currentDateTime, CancellationToken cancellationToken = default)
+        {
+            return await _context.Reservations.Where(r => r.Status == ReservationStatus.Active && r.ExpiresAt < currentDateTime).Select(r => r.Id).ToListAsync(cancellationToken);
+        }
+
+        public async Task<Reservation?> GetReservationByIdAsync(int reservationId, CancellationToken cancellation = default)
+        {
+            return await _context.Reservations.Include(r => r.EventSeat).FirstOrDefaultAsync(r => r.Id == reservationId, cancellation);
         }
     }
 }
