@@ -99,6 +99,20 @@ namespace EventTicketingSystem.Api.ExceptionHandling
 
                 return true;
             }
+            else if (exception is InvalidReservationStateException invalidReservationStateException)
+            {
+                httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
+                var responseObject = new
+                {
+                    status = httpContext.Response.StatusCode,
+                    title = "Invalid Reservation State",
+                    error = invalidReservationStateException.Message
+                };
+
+                await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
+
+                return true;
+            }
             return false;
         }
     }

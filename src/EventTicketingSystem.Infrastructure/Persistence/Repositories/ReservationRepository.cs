@@ -21,10 +21,13 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Repositories
 
         public async Task<IReadOnlyList<int>> GetExpiredReservationIdsAsync(DateTime currentDateTime, CancellationToken cancellationToken = default)
         {
-            return await _context.Reservations.Where(r => r.Status == ReservationStatus.Active && r.ExpiresAt < currentDateTime).Select(r => r.Id).ToListAsync(cancellationToken);
+            return await _context.Reservations.Where(
+                r => r.Status == ReservationStatus.Active &&
+                r.ExpiresAt < currentDateTime &&
+                (r.Booking == null || r.Booking.Status != BookingStatus.Pending)).Select(r => r.Id).ToListAsync(cancellationToken);
         }
 
-        public async Task<Reservation?> GetReservationByIdAsync(int reservationId, CancellationToken cancellation = default)
+        public async Task<Reservation?> GetByIdAsync(int reservationId, CancellationToken cancellation = default)
         {
             return await _context.Reservations.Include(r => r.EventSeat).FirstOrDefaultAsync(r => r.Id == reservationId, cancellation);
         }
