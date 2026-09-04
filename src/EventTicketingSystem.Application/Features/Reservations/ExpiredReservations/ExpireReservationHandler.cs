@@ -16,7 +16,7 @@ namespace EventTicketingSystem.Application.Features.Reservations.ExpiredReservat
 
         public async Task HandleAsync(int reservationId, DateTime currentTime, CancellationToken cancellationToken = default)
         {
-            var reservation = await _reservationRepository.GetReservationByIdAsync(reservationId, cancellationToken);
+            var reservation = await _reservationRepository.GetByIdAsync(reservationId, cancellationToken);
 
             if (reservation == null)
             {

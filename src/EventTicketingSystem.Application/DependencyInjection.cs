@@ -1,4 +1,5 @@
-﻿using EventTicketingSystem.Application.Features.Events.AssignSeatToEvent;
+﻿using EventTicketingSystem.Application.Features.Bookings;
+using EventTicketingSystem.Application.Features.Events.AssignSeatToEvent;
 using EventTicketingSystem.Application.Features.Events.CreateEvent;
 using EventTicketingSystem.Application.Features.Events.GetEventById;
 using EventTicketingSystem.Application.Features.Events.GetEvents;
@@ -36,6 +37,8 @@ namespace EventTicketingSystem.Application
             services.AddScoped<CreateReservationCommandHandler>();
 
             services.AddScoped<ExpireReservationHandler>();
+
+            services.AddScoped<CreateBookingCommandHandler>();
 
             services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
             return services;

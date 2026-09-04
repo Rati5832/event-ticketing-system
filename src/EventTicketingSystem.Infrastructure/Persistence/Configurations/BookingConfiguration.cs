@@ -14,8 +14,24 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Configurations
             builder.Property(b => b.TotalPrice).IsRequired().HasPrecision(18, 2);
             builder.Property(b => b.CreatedAt).IsRequired();
             builder.Property(b => b.Status).IsRequired();
-            builder.HasOne(b => b.User).WithMany(u => u.Bookings).HasForeignKey(b => b.UserId).OnDelete(DeleteBehavior.Restrict);
-            builder.HasMany(b => b.Payments).WithOne(p => p.Booking).HasForeignKey(p => p.BookingId).OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasOne(b => b.Reservation)
+                .WithOne(r => r.Booking)
+                .HasForeignKey<Booking>(b => b.ReservationId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasOne(b => b.User)
+                .WithMany(u => u.Bookings)
+                .HasForeignKey(b => b.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasMany(b => b.Payments)
+                .WithOne(p => p.Booking)
+                .HasForeignKey(p => p.BookingId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

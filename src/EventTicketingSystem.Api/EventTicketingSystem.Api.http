@@ -79,8 +79,18 @@ POST {{EventTicketingSystem.Api_HostAddress}}/api/reservations
 Content-Type: application/json
 
 {
-  "EventSeatId" : 2,
+  "EventSeatId" : 3,
   "UserId": 1
+}
+
+###
+
+
+POST {{EventTicketingSystem.Api_HostAddress}}/api/bookings
+Content-Type: application/json
+
+{
+  "ReservationId" : 13
 }
 
 ###
