@@ -31,5 +31,10 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Repositories
         {
             return await _context.Reservations.Include(r => r.EventSeat).FirstOrDefaultAsync(r => r.Id == reservationId, cancellation);
         }
+
+        public async Task<IEnumerable<Reservation>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            return await _context.Reservations.ToListAsync(cancellationToken);
+        }
     }
 }

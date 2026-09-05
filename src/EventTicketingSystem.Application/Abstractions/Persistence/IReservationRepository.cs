@@ -9,5 +9,7 @@ namespace EventTicketingSystem.Application.Abstractions.Persistence
         Task<Reservation?> GetByIdAsync(int reservationId, CancellationToken cancellation = default);
 
         Task<IReadOnlyList<int>> GetExpiredReservationIdsAsync(DateTime currentDateTime, CancellationToken cancellationToken = default);
+
+        Task<IEnumerable<Reservation>> GetAllAsync(CancellationToken cancellationToken = default);
     }
 }

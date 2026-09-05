@@ -1,4 +1,5 @@
-﻿using EventTicketingSystem.Application.Features.Bookings;
+﻿using EventTicketingSystem.Application.Features.Bookings.CreateBooking;
+using EventTicketingSystem.Application.Features.Bookings.GetBookings;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventTicketingSystem.Api.Controllers
@@ -8,10 +9,14 @@ namespace EventTicketingSystem.Api.Controllers
     public class BookingsController : ControllerBase
     {
         private readonly CreateBookingCommandHandler _createBookingCommandHandler;
+        private readonly GetBookingsRequestHandler _getBookingsRequestHandler;
 
-        public BookingsController(CreateBookingCommandHandler createBookingCommandHandler)
+        public BookingsController(
+            CreateBookingCommandHandler createBookingCommandHandler,
+            GetBookingsRequestHandler getBookingsRequestHandler)
         {
             _createBookingCommandHandler = createBookingCommandHandler;
+            _getBookingsRequestHandler = getBookingsRequestHandler;
         }
 
         [HttpPost]
@@ -19,6 +24,13 @@ namespace EventTicketingSystem.Api.Controllers
         {
             var bookingResponse = await _createBookingCommandHandler.HandleAsync(command, cancellationToken);
             return StatusCode(201, bookingResponse);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+        {
+            var bookings = await _getBookingsRequestHandler.Handle(cancellationToken);
+            return Ok(bookings);
         }
     }
 }

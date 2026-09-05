@@ -17,8 +17,7 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             builder.Property(x => x.Provider)
-                .IsRequired()
-                .HasMaxLength(50);
+                .IsRequired();
 
             builder.Property(x => x.TransactionId).HasMaxLength(30);
 
