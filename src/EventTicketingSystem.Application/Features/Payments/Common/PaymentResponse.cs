@@ -1,14 +1,12 @@
 ﻿using EventTicketingSystem.Domain.Enums;
 
-namespace EventTicketingSystem.Domain.Entities
+namespace EventTicketingSystem.Application.Features.Payments.Common
 {
-    public class Payment
+    public class PaymentResponse
     {
         public int Id { get; set; }
 
         public int BookingId { get; set; }
-
-        public Booking Booking { get; set; } = null!;
 
         public decimal Amount { get; set; }
 

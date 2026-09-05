@@ -32,7 +32,7 @@ Content-Type: application/json
 
 ###
 
-GET {{EventTicketingSystem.Api_HostAddress}}/api/venues/16/seats
+GET {{EventTicketingSystem.Api_HostAddress}}/api/venues/12/seats
 
 ###
 
@@ -75,6 +75,10 @@ GET {{EventTicketingSystem.Api_HostAddress}}/api/events/18/seats
 ###
 
 
+GET {{EventTicketingSystem.Api_HostAddress}}/api/reservations
+
+###
+
 POST {{EventTicketingSystem.Api_HostAddress}}/api/reservations
 Content-Type: application/json
 
@@ -86,6 +90,11 @@ Content-Type: application/json
 ###
 
 
+
+GET {{EventTicketingSystem.Api_HostAddress}}/api/bookings
+
+###
+
 POST {{EventTicketingSystem.Api_HostAddress}}/api/bookings
 Content-Type: application/json
 
@@ -95,3 +104,16 @@ Content-Type: application/json
 
 ###
 
+
+GET {{EventTicketingSystem.Api_HostAddress}}/api/payments
+
+###
+
+POST {{EventTicketingSystem.Api_HostAddress}}/api/payments
+Content-Type: application/json
+{
+  "BookingId" : 1,
+  "Provider" : "Mock"
+}
+
+###

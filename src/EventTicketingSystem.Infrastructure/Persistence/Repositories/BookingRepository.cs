@@ -22,5 +22,21 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Repositories
         {
             return await _dbContext.Bookings.AsNoTracking().AnyAsync(b => b.ReservationId == reservationId, cancellationToken);
         }
+
+        public async Task<Booking?> GetBookByIdAsync(int bookId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Bookings
+                .Include(b => b.Reservation)
+                .ThenInclude(r => r.EventSeat)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(b => b.Id == bookId);
+        }
+
+        public async Task<IEnumerable<Booking>> GetBooksAsync(CancellationToken cancellationToken)
+        {
+            return await _dbContext.Bookings
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+        }
     }
 }

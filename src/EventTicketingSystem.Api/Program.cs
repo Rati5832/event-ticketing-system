@@ -2,10 +2,13 @@ using EventTicketingSystem.Api.BackgroundServices;
 using EventTicketingSystem.Api.ExceptionHandling;
 using EventTicketingSystem.Application;
 using EventTicketingSystem.Infrastructure;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options => 
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
+);
 
 builder.Services.AddOpenApi();
 

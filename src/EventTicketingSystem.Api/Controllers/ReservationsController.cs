@@ -1,4 +1,5 @@
 ﻿using EventTicketingSystem.Application.Features.Reservations.CreateReservation;
+using EventTicketingSystem.Application.Features.Reservations.GetReservations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventTicketingSystem.Api.Controllers
@@ -8,10 +9,14 @@ namespace EventTicketingSystem.Api.Controllers
     public class ReservationsController : ControllerBase
     {
         private readonly CreateReservationCommandHandler _createReservationCommandHandler;
+        private readonly GetReservationsRequestHandler _getReservationsRequestHandler;
 
-        public ReservationsController(CreateReservationCommandHandler createReservationCommandHandler)
+        public ReservationsController(
+            CreateReservationCommandHandler createReservationCommandHandler,
+            GetReservationsRequestHandler getReservationsRequestHandler)
         {
             _createReservationCommandHandler = createReservationCommandHandler;
+            _getReservationsRequestHandler = getReservationsRequestHandler;
         }
 
         [HttpPost]
@@ -20,5 +25,13 @@ namespace EventTicketingSystem.Api.Controllers
             var reservationDto = await _createReservationCommandHandler.Handle(createReservation, cancellationToken);
             return StatusCode(201, reservationDto);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+        {
+            var reservations = await _getReservationsRequestHandler.Handle(cancellationToken);
+            return Ok(reservations);
+        }
+
     }
 }

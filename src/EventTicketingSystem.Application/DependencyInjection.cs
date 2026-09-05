@@ -1,11 +1,15 @@
-﻿using EventTicketingSystem.Application.Features.Bookings;
+﻿using EventTicketingSystem.Application.Features.Bookings.CreateBooking;
+using EventTicketingSystem.Application.Features.Bookings.GetBookings;
 using EventTicketingSystem.Application.Features.Events.AssignSeatToEvent;
 using EventTicketingSystem.Application.Features.Events.CreateEvent;
 using EventTicketingSystem.Application.Features.Events.GetEventById;
 using EventTicketingSystem.Application.Features.Events.GetEvents;
 using EventTicketingSystem.Application.Features.Events.GetSeatsByEvent;
+using EventTicketingSystem.Application.Features.Payments.CreatePayment;
+using EventTicketingSystem.Application.Features.Payments.GetPayments;
 using EventTicketingSystem.Application.Features.Reservations.CreateReservation;
 using EventTicketingSystem.Application.Features.Reservations.ExpiredReservations;
+using EventTicketingSystem.Application.Features.Reservations.GetReservations;
 using EventTicketingSystem.Application.Features.Seats.CreateSeat;
 using EventTicketingSystem.Application.Features.Seats.GetSeatsByVenue;
 using EventTicketingSystem.Application.Features.Venues.CreateVenue;
@@ -35,10 +39,14 @@ namespace EventTicketingSystem.Application
             services.AddScoped<GetSeatsByEventHandler>();
 
             services.AddScoped<CreateReservationCommandHandler>();
-
+            services.AddScoped<GetReservationsRequestHandler>();
             services.AddScoped<ExpireReservationHandler>();
 
             services.AddScoped<CreateBookingCommandHandler>();
+            services.AddScoped<GetBookingsRequestHandler>();
+
+            services.AddScoped<CreatePaymentCommandHandler>();
+            services.AddScoped<GetPaymentsRequestHandler>();
 
             services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
             return services;

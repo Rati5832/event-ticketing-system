@@ -1,7 +1,7 @@
 ﻿using EventTicketingSystem.Application.Common.Validations;
 using FluentValidation;
 
-namespace EventTicketingSystem.Application.Features.Bookings
+namespace EventTicketingSystem.Application.Features.Bookings.CreateBooking
 {
     public class CreateBookingCommandValidator : AbstractValidator<CreateBookingCommand>
     {

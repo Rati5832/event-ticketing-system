@@ -1,4 +1,4 @@
-﻿namespace EventTicketingSystem.Application.Features.Bookings
+﻿namespace EventTicketingSystem.Application.Features.Bookings.CreateBooking
 {
     public class CreateBookingCommand
     {

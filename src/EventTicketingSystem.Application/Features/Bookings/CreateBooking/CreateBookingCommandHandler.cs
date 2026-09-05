@@ -1,12 +1,12 @@
 ﻿using EventTicketingSystem.Application.Abstractions.Persistence;
 using EventTicketingSystem.Application.Common.Exceptions;
 using EventTicketingSystem.Application.Features.Bookings.Common;
-using EventTicketingSystem.Application.Features.Bookings.Helper;
+using EventTicketingSystem.Application.Features.Helper;
 using EventTicketingSystem.Domain.Entities;
 using EventTicketingSystem.Domain.Enums;
 using FluentValidation;
 
-namespace EventTicketingSystem.Application.Features.Bookings
+namespace EventTicketingSystem.Application.Features.Bookings.CreateBooking
 {
     public class CreateBookingCommandHandler
     {
@@ -62,7 +62,7 @@ namespace EventTicketingSystem.Application.Features.Bookings
             {
                 UserId = reservation.UserId,
                 ReservationId = reservation.Id,
-                BookingNumber = BookingHelper.GenerateBookingNumber(),
+                BookingNumber = IdentifierGenerator.GenerateBookingNumber(),
                 TotalPrice = reservation.EventSeat.Price,
                 CreatedAt = DateTime.UtcNow,
                 Status = BookingStatus.Pending
