@@ -1,12 +1,27 @@
 ﻿using EventTicketingSystem.Application.Common.Exceptions;
 using FluentValidation;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace EventTicketingSystem.Api.ExceptionHandling
 {
     public class GlobalExceptionHandler : IExceptionHandler
     {
+        private static (int statusCode, string title) MapException(Exception exception)
+        {
+            return exception switch
+            {
+                NotFoundException => (StatusCodes.Status404NotFound, "Not Found"),
+                SeatAlreadyExistsException => (StatusCodes.Status409Conflict, "Resource Already Exists"),
+                SeatNotInVenueException => (StatusCodes.Status400BadRequest, "Invalid Venue Seat"),
+                SeatNotAvailableException => (StatusCodes.Status409Conflict, "Seat Not Available"),
+                ConcurrencyException => (StatusCodes.Status409Conflict, "Concurrency Conflict"),
+                InvalidReservationStateException => (StatusCodes.Status409Conflict, "Invalid Reservation State"),
+                InvalidBookingException => (StatusCodes.Status400BadRequest, "Invalid Booking"),
+                InvalidPaymentStateException => (StatusCodes.Status400BadRequest, "Invalid Payment State"),
+                _ => (StatusCodes.Status500InternalServerError, "Internal Server Error")
+            };
+        }
+
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
             if (exception is ValidationException validationException)
@@ -20,124 +35,30 @@ namespace EventTicketingSystem.Api.ExceptionHandling
                     error => error.Select(error => error.ErrorMessage).ToArray()
                     );
 
-                var responseObject = new
+                var response = new
                 {
                     status = httpContext.Response.StatusCode,
                     title = "Validation Failed",
                     errors = errorNamesAndMessages
                 };
 
-                await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
+                await httpContext.Response.WriteAsJsonAsync(response, cancellationToken);
 
                 return true;
             }
-            else if (exception is NotFoundException notFoundException)
+
+            var (statusCode, errorTitle) = MapException(exception);
+            httpContext.Response.StatusCode = statusCode;
+            var responseObject = new
             {
-                httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+                status = httpContext.Response.StatusCode,
+                title = errorTitle,
+                error = statusCode == StatusCodes.Status500InternalServerError ? "An unexpected error occurred." : exception.Message
+            };
 
-                var responseObject = new
-                {
-                    status = httpContext.Response.StatusCode,
-                    title = "Not Found",
-                    error = notFoundException.Message
-                };
+            await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
 
-                await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
-
-                return true;
-            }
-            else if (exception is SeatAlreadyExistsException or SeatNotInVenueException)
-            {
-                var (statusCode, title, errorMessage) = exception switch
-                {
-                    SeatAlreadyExistsException ex => (StatusCodes.Status409Conflict, "Resource Already Exists", ex.Message),
-                    SeatNotInVenueException ex => (StatusCodes.Status400BadRequest, "Invalid Venue Seat", ex.Message),
-                    _ => (StatusCodes.Status409Conflict, "Conflict", exception.Message)
-                };
-
-                httpContext.Response.StatusCode = statusCode;
-
-                var responseObject = new
-                {
-                    statusCode,
-                    title,
-                    errorMessage
-                };
-
-                await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
-
-                return true;
-            }
-            else if (exception is SeatNotAvailableException seatNotAvailableException)
-            {
-                httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
-                var responseObject = new
-                {
-                    status = httpContext.Response.StatusCode,
-                    title = "Seat Not Available",
-                    error = seatNotAvailableException.Message
-                };
-
-                await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
-
-                return true;
-            }
-            else if (exception is ConcurrencyException concurrencyException)
-            {
-                httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
-
-                var responseObject = new
-                {
-                    status = httpContext.Response.StatusCode,
-                    title = "Concurrency Conflict",
-                    error = concurrencyException.Message
-                };
-
-                await httpContext.Response.WriteAsJsonAsync(
-                    responseObject,
-                    cancellationToken);
-
-                return true;
-            }
-            else if (exception is InvalidReservationStateException invalidReservationStateException)
-            {
-                httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
-                var responseObject = new
-                {
-                    status = httpContext.Response.StatusCode,
-                    title = "Invalid Reservation State",
-                    error = invalidReservationStateException.Message
-                };
-
-                await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
-
-                return true;
-            }
-            else if (exception is InvalidBookingException invalidBookingException)
-            {
-                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-                var responseObject = new
-                {
-                    status = httpContext.Response.StatusCode,
-                    title = "Invalid Booking",
-                    error = invalidBookingException.Message
-                };
-                await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
-                return true;
-            }
-            else if (exception is InvalidPaymentStateException invalidPaymentStateException)
-            {
-                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-                var responseObject = new
-                {
-                    status = httpContext.Response.StatusCode,
-                    title = "Invalid Payment State",
-                    error = invalidPaymentStateException.Message
-                };
-                await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
-                return true;
-            }
-            return false;
+            return true;
         }
     }
 }
