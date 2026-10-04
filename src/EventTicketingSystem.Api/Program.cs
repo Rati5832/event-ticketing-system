@@ -11,6 +11,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 );
 
 builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
@@ -25,7 +26,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
 app.UseExceptionHandler();
 
 app.UseHttpsRedirection();

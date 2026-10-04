@@ -13,7 +13,7 @@ namespace EventTicketingSystem.Application.Features.Payments.CreatePayment
             RuleFor(x => x.Provider)
                 .IsInEnum()
                 .WithMessage("Invalid payment provider.")
-                .NotEqual(PaymentProvider.Unknow)
+                .NotEqual(PaymentProvider.Unknown)
                 .WithMessage("A valid payment provider is required.");
         }
     }

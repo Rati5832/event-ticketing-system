@@ -113,6 +113,30 @@ namespace EventTicketingSystem.Api.ExceptionHandling
 
                 return true;
             }
+            else if (exception is InvalidBookingException invalidBookingException)
+            {
+                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                var responseObject = new
+                {
+                    status = httpContext.Response.StatusCode,
+                    title = "Invalid Booking",
+                    error = invalidBookingException.Message
+                };
+                await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
+                return true;
+            }
+            else if (exception is InvalidPaymentStateException invalidPaymentStateException)
+            {
+                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                var responseObject = new
+                {
+                    status = httpContext.Response.StatusCode,
+                    title = "Invalid Payment State",
+                    error = invalidPaymentStateException.Message
+                };
+                await httpContext.Response.WriteAsJsonAsync(responseObject, cancellationToken);
+                return true;
+            }
             return false;
         }
     }

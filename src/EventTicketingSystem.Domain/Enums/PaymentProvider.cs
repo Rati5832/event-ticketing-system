@@ -2,7 +2,7 @@
 {
     public enum PaymentProvider
     {
-        Unknow,
+        Unknown,
         Mock
     }
 }

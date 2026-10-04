@@ -30,7 +30,7 @@ namespace EventTicketingSystem.Application.Features.Reservations.CreateReservati
         {
             await _validator.ValidateAndThrowAsync(createReservation, cancellationToken);
 
-            var eventSeat = await _eventSeatRepository.GetEventSeatById(createReservation.EventSeatId, cancellationToken);
+            var eventSeat = await _eventSeatRepository.GetEventSeatByIdAsync(createReservation.EventSeatId, cancellationToken);
             if (eventSeat == null)
             {
                 throw new NotFoundException($"Event Seat With Id {createReservation.EventSeatId} Does Not Exist");
