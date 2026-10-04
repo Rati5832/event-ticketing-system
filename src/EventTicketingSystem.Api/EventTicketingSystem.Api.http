@@ -117,3 +117,9 @@ Content-Type: application/json
 }
 
 ###
+
+POST {{EventTicketingSystem.Api_HostAddress}}/api/payments/2/process
+Content-Type: application/json
+{
+  "IsSuccessful" : false
+}

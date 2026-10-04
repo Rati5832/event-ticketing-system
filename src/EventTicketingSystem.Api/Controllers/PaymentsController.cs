@@ -1,5 +1,6 @@
 ﻿using EventTicketingSystem.Application.Features.Payments.CreatePayment;
 using EventTicketingSystem.Application.Features.Payments.GetPayments;
+using EventTicketingSystem.Application.Features.Payments.ProcessPayment;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventTicketingSystem.Api.Controllers
@@ -10,13 +11,16 @@ namespace EventTicketingSystem.Api.Controllers
     {
         private readonly CreatePaymentCommandHandler _createPaymentCommandHandler;
         private readonly GetPaymentsRequestHandler _getPaymentsRequestHandler;
+        private readonly ProcessPaymentCommandHandler _processPaymentCommandHandler;
 
         public PaymentsController(
             CreatePaymentCommandHandler createPaymentCommandHandler,
-            GetPaymentsRequestHandler getPaymentsRequestHandler)
+            GetPaymentsRequestHandler getPaymentsRequestHandler,
+            ProcessPaymentCommandHandler processPaymentCommandHandler)
         {
             _createPaymentCommandHandler = createPaymentCommandHandler;
             _getPaymentsRequestHandler = getPaymentsRequestHandler;
+            _processPaymentCommandHandler = processPaymentCommandHandler;
         }
 
         [HttpPost]
@@ -24,6 +28,13 @@ namespace EventTicketingSystem.Api.Controllers
         {
             var paymentResponse = await _createPaymentCommandHandler.HandleAsync(command, cancellationToken);
             return StatusCode(201, paymentResponse);
+        }
+
+        [HttpPost("{paymentId:int}/process")]
+        public async Task<IActionResult> Process(int paymentId, ProcessPaymentRequest request, CancellationToken cancellationToken)
+        { 
+            var process =  await _processPaymentCommandHandler.HandleAsync(paymentId, request, cancellationToken);
+            return Ok(process);
         }
 
         [HttpGet]

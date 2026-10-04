@@ -8,6 +8,6 @@ namespace EventTicketingSystem.Application.Abstractions.Persistence
 
         Task<bool> EventAndSeatExistsAsync(int eventId, int seatId, CancellationToken cancellationToken);
 
-        Task<EventSeat?> GetEventSeatById(int eventSeatId, CancellationToken cancellationToken);
+        Task<EventSeat?> GetEventSeatByIdAsync(int eventSeatId, CancellationToken cancellationToken);
     }
 }

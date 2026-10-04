@@ -26,7 +26,7 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Repositories
             cancellationToken);
         }
 
-        public async Task<EventSeat?> GetEventSeatById(int eventSeatId, CancellationToken cancellationToken)
+        public async Task<EventSeat?> GetEventSeatByIdAsync(int eventSeatId, CancellationToken cancellationToken)
         {
             return await _context.EventSeats.FirstOrDefaultAsync(es => es.Id == eventSeatId, cancellationToken);
         }

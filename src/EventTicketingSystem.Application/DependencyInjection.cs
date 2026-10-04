@@ -7,6 +7,7 @@ using EventTicketingSystem.Application.Features.Events.GetEvents;
 using EventTicketingSystem.Application.Features.Events.GetSeatsByEvent;
 using EventTicketingSystem.Application.Features.Payments.CreatePayment;
 using EventTicketingSystem.Application.Features.Payments.GetPayments;
+using EventTicketingSystem.Application.Features.Payments.ProcessPayment;
 using EventTicketingSystem.Application.Features.Reservations.CreateReservation;
 using EventTicketingSystem.Application.Features.Reservations.ExpiredReservations;
 using EventTicketingSystem.Application.Features.Reservations.GetReservations;
@@ -47,6 +48,7 @@ namespace EventTicketingSystem.Application
 
             services.AddScoped<CreatePaymentCommandHandler>();
             services.AddScoped<GetPaymentsRequestHandler>();
+            services.AddScoped<ProcessPaymentCommandHandler>();
 
             services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
             return services;

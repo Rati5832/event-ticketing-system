@@ -8,5 +8,7 @@ namespace EventTicketingSystem.Application.Abstractions.Persistence
         Task AddAsync(Payment payment, CancellationToken cancellationToken = default);
 
         Task<IEnumerable<Payment>> GetAllPaymentsAsync(CancellationToken cancellationToken);
+       
+        Task<Payment?> GetByIdAsync(int paymentId, CancellationToken cancellationToken);
     }
 }
