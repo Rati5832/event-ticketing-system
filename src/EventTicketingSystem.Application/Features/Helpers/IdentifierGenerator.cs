@@ -9,7 +9,7 @@
 
         public static string GenerateTransactionId()
         {
-            return $"TRANID-{Guid.NewGuid().ToString("N")[..8].ToUpper()}";
+            return $"TRANID-{Guid.NewGuid():N}"[..30].ToUpperInvariant();
         }
     }
 }

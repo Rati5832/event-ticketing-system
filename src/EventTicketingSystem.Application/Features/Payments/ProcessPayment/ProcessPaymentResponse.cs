@@ -11,5 +11,10 @@ namespace EventTicketingSystem.Application.Features.Payments.ProcessPayment
         public PaymentStatus PaymentStatus { get; set; }
         
         public BookingStatus BookingStatus { get; set; }
+
+        public DateTime? CompletedAt { get; set; }
+
+        public string? TransactionId { get; set; }
+
     }
 }

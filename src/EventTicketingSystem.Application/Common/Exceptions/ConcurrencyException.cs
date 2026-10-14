@@ -6,5 +6,6 @@
             : base(message, innerException)
         {
         }
+
     }
 }

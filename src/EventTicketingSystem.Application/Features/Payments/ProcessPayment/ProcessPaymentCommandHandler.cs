@@ -1,5 +1,6 @@
 ﻿using EventTicketingSystem.Application.Abstractions.Persistence;
 using EventTicketingSystem.Application.Common.Exceptions;
+using EventTicketingSystem.Application.Features.Helper;
 using EventTicketingSystem.Domain.Enums;
 using FluentValidation;
 
@@ -46,16 +47,30 @@ namespace EventTicketingSystem.Application.Features.Payments.ProcessPayment
                 throw new InvalidPaymentStateException($"Payment with ID {command.PaymentId} is not in a pending state.");
             }
 
+            if (payment.Booking.Reservation.Status != ReservationStatus.Active)
+            {
+                throw new InvalidReservationStateException($"Reservation for booking {payment.Booking.Id} is not active.");
+            }
+
+            if (payment.Booking.Reservation.EventSeat.Status != EventSeatStatus.Reserved)
+            {
+                throw new InvalidReservationStateException($"Event seat for booking {payment.Booking.Id} is not reserved.");
+            }
 
             if (command.IsSuccessful)
             {
                 payment.Status = PaymentStatus.Succeeded;
                 payment.Booking.Status = BookingStatus.Confirmed;
+                payment.Booking.Reservation.Status = ReservationStatus.Completed;
+                payment.Booking.Reservation.EventSeat.Status = EventSeatStatus.Booked;
             }
             else
             {
                 payment.Status = PaymentStatus.Failed;
             }
+
+            payment.CompletedAt = DateTime.UtcNow;
+            payment.TransactionId = IdentifierGenerator.GenerateTransactionId();
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             return new ProcessPaymentResponse
@@ -64,6 +79,8 @@ namespace EventTicketingSystem.Application.Features.Payments.ProcessPayment
                 BookingId = payment.Booking.Id,
                 PaymentStatus = payment.Status,
                 BookingStatus = payment.Booking.Status,
+                CompletedAt = payment.CompletedAt,
+                TransactionId = payment.TransactionId,
             };
         }
     }
