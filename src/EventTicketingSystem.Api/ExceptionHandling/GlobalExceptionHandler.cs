@@ -18,6 +18,7 @@ namespace EventTicketingSystem.Api.ExceptionHandling
                 InvalidReservationStateException => (StatusCodes.Status409Conflict, "Invalid Reservation State"),
                 InvalidBookingException => (StatusCodes.Status400BadRequest, "Invalid Booking"),
                 InvalidPaymentStateException => (StatusCodes.Status400BadRequest, "Invalid Payment State"),
+                PaymentAlreadyPendingException => (StatusCodes.Status409Conflict, "Payment Already Pending"),
                 _ => (StatusCodes.Status500InternalServerError, "Internal Server Error")
             };
         }

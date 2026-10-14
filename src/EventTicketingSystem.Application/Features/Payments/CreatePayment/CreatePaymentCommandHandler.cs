@@ -1,5 +1,6 @@
 ﻿using EventTicketingSystem.Application.Abstractions.Persistence;
 using EventTicketingSystem.Application.Common.Exceptions;
+using EventTicketingSystem.Application.Common.Exceptions.UniqueConstraint;
 using EventTicketingSystem.Domain.Entities;
 using EventTicketingSystem.Domain.Enums;
 using FluentValidation;
@@ -38,7 +39,7 @@ namespace EventTicketingSystem.Application.Features.Payments.CreatePayment
 
             if (booking.Status != BookingStatus.Pending)
             {
-                throw new InvalidReservationStateException($"Cannot create payment for booking with ID {command.BookingId} because the booking is not pending.");
+                throw new InvalidBookingException($"Cannot create payment for booking with ID {command.BookingId} because the booking is not pending.");
             }
 
             if (booking.Reservation.Status != ReservationStatus.Active)
@@ -51,6 +52,11 @@ namespace EventTicketingSystem.Application.Features.Payments.CreatePayment
                 throw new InvalidReservationStateException($"Cannot create payment for booking with ID {command.BookingId} because the event seat is not reserved.");
             }
 
+            if (await _paymentRepository.HasPendingPaymentAsync(command.BookingId, cancellationToken))
+            {
+                throw new PaymentAlreadyPendingException($"A pending payment already exists for booking with ID {command.BookingId}.");
+            }
+
             var payment = new Payment
             {
                 BookingId = command.BookingId,
@@ -61,7 +67,15 @@ namespace EventTicketingSystem.Application.Features.Payments.CreatePayment
             };
 
             await _paymentRepository.AddAsync(payment, cancellationToken);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            try 
+            {
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+            }
+            catch (UniqueConstraintException ex) when (ex.ConstraintType == UniqueConstraintType.PendingPaymentPerBooking)
+            {
+                throw new PaymentAlreadyPendingException($"A pending payment already exists for booking {command.BookingId}.", ex);
+            }
 
             return new CreatePaymentResponse
             {

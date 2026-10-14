@@ -170,7 +170,9 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookingId");
+                    b.HasIndex("BookingId")
+                        .IsUnique()
+                        .HasFilter("[Status] = 0");
 
                     b.ToTable("Payments");
                 });

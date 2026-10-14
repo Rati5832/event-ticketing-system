@@ -1,5 +1,6 @@
 ﻿using EventTicketingSystem.Application.Abstractions.Persistence;
 using EventTicketingSystem.Domain.Entities;
+using EventTicketingSystem.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventTicketingSystem.Infrastructure.Persistence.Repositories
@@ -13,7 +14,7 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task AddAsync(Payment payment, CancellationToken cancellationToken = default)
+        public async Task AddAsync(Payment payment, CancellationToken cancellationToken)
         {
             await _dbContext.Payments.AddAsync(payment, cancellationToken);
         }
@@ -25,7 +26,16 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Repositories
 
         public async Task<Payment?> GetByIdAsync(int paymentId, CancellationToken cancellationToken)
         {
-            return await _dbContext.Payments.Include(p => p.Booking).FirstOrDefaultAsync(p => p.Id == paymentId, cancellationToken);
+            return await _dbContext.Payments
+                .Include(p => p.Booking)
+                .ThenInclude(p => p.Reservation)
+                .ThenInclude(p => p.EventSeat)
+                .FirstOrDefaultAsync(p => p.Id == paymentId, cancellationToken);
+        }
+
+        public async Task<bool> HasPendingPaymentAsync(int bookingId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Payments.AsNoTracking().AnyAsync(p => p.BookingId == bookingId && p.Status == PaymentStatus.Pending, cancellationToken);
         }
     }
 }

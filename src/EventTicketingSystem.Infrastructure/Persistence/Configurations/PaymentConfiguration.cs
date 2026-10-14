@@ -1,4 +1,5 @@
 ﻿using EventTicketingSystem.Domain.Entities;
+using EventTicketingSystem.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -23,6 +24,8 @@ namespace EventTicketingSystem.Infrastructure.Persistence.Configurations
 
             builder.Property(x => x.CreatedAt)
                 .IsRequired();
+
+            builder.HasIndex(x => x.BookingId).IsUnique().HasFilter($"[Status] = {(int)PaymentStatus.Pending}");
         }
     }
 }
